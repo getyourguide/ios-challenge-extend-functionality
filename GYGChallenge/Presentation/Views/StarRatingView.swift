@@ -4,29 +4,8 @@
 
 import UIKit
 
-class BaseView: UIView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        self.setupViews()
-    }
-
-    override func layoutSubviews() {
-        layer.cornerRadius = 8
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(frame: .zero)
-
-        setupViews()
-    }
-
-    func setupViews () {}
-}
-
-
-class StarRatingView: BaseView {
-    let stackView: UIStackView = {
+final class StarRatingView: UIView {
+    private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
@@ -35,9 +14,18 @@ class StarRatingView: BaseView {
         return stackView
     }()
 
-    override func setupViews() {
-        super.setupViews()
+    init() {
+        super.init(frame: .zero)
 
+        setUp()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setUp() {
         addSubview(stackView)
         stackView.pinEdges(to: self)
 
